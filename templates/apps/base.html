@@ -138,7 +138,12 @@
                                             <li><a href="{% url 'login_page' %}">My Account</a></li>
                                             <li><a href="checkout.html">Checkout</a></li>
                                             {% if user.is_authenticated %}
-                                                <li><a href="{% url 'logout_page' %}">Logout</a></li>
+                                                <li>
+                                                    <form action="{% url 'logout_page' %}" method="post">
+                                                        {% csrf_token %}
+                                                        <button type="submit">Logout</button>
+                                                    </form>
+                                                </li>
                                             {% else %}
                                                 <li><a href="{% url 'login_page' %}">Sign In</a></li>
                                             {% endif %}

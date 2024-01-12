@@ -1,6 +1,10 @@
-from django.db.models import Model, CharField, ForeignKey, CASCADE, ManyToManyField, DateTimeField, \
-    ImageField
+from django.contrib.auth.models import AbstractUser
+from django.db.models import Model, CharField, ForeignKey, CASCADE, ManyToManyField, DateTimeField, ImageField
 from django_ckeditor_5.fields import CKEditor5Field
+
+
+class User(AbstractUser):
+    image = ImageField(upload_to='users/images')
 
 
 class Category(Model):
@@ -26,7 +30,7 @@ class Tag(Model):
 class Blog(Model):
     name = CharField(max_length=255)
     image = ImageField(upload_to='blogs/images/', default='blogs/default-blog.jpg')
-    author = ForeignKey('auth.User', CASCADE)
+    author = ForeignKey('apps.User', CASCADE)
     category = ForeignKey('apps.Category', CASCADE)
     tags = ManyToManyField('apps.Tag')
     text = CKEditor5Field(blank=True, null=True)
@@ -43,6 +47,6 @@ class Blog(Model):
 class Comment(Model):
     text = CharField(max_length=255)
     blog = ForeignKey('apps.Blog', CASCADE)
-    author = ForeignKey('auth.User', CASCADE)
+    author = ForeignKey('apps.User', CASCADE)
     updated_at = DateTimeField(auto_now=True)
     created_at = DateTimeField(auto_now_add=True)

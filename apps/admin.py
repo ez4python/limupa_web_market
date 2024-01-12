@@ -1,6 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-from apps.models import Blog, Tag, Category, Comment
+from apps.models import Blog, Tag, Category, Comment, User
+
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    pass
 
 
 @admin.register(Blog)

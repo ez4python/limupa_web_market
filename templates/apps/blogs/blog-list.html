@@ -40,12 +40,13 @@
                                                         <a class="author" href="#"><i
                                                                 class="fa fa-user"></i>{{ blog.author.first_name }}</a>
                                                         <a class="comment" href="#"><i
-                                                                class="fa fa-comment-o"></i>{{ blog.count_commit }} comment</a>
+                                                                class="fa fa-comment-o"></i>{{ blog.count_commit }}
+                                                            comment</a>
                                                         <a class="post-time" href="#"><i
                                                                 class="fa fa-calendar"></i> {{ blog.created_at|date:"d b Y" }}
                                                         </a>
                                                     </div>
-                                                    <p>{{ blog.text }}</p>
+                                                    <p>{{ blog.text|safe }}</p>
                                                     <a class="read-more" href="{% url 'blog_detail_page' blog.id %}">Read
                                                         More...</a>
                                                 </div>
