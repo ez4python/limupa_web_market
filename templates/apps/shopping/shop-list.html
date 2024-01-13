@@ -137,7 +137,7 @@
                                             <div class="row product-layout-list">
                                                 <div class="col-lg-3 col-md-5 ">
                                                     <div class="product-image">
-                                                        <a href="single-product.html">
+                                                        <a href="{% url 'single_product_page' product.id %}">
                                                             <img src="{{ product.image.url }}"
                                                                  alt="Li's Product Image">
                                                         </a>
@@ -149,7 +149,8 @@
                                                         <div class="product_desc_info">
                                                             <div class="product-review">
                                                                 <h5 class="manufacturer">
-                                                                    <a href="{% url 'single_product_page' product.id %}">Graphic Corner</a>
+                                                                    <a href="{% url 'single_product_page' product.id %}">Graphic
+                                                                        Corner</a>
                                                                 </h5>
                                                                 <div class="rating-box">
                                                                     <ul class="rating">
@@ -223,7 +224,7 @@
                         <!-- category-sub-menu start -->
                         <div class="category-sub-menu">
                             <ul>
-                                <li class="has-sub"><a href="# ">Prime Video</a>
+                                <li class="has-sub"><a href="#">Prime Video</a>
                                     <ul>
                                         <li><a href="#">All Videos</a></li>
                                         <li><a href="#">Blouses</a></li>
