@@ -44,27 +44,7 @@
     <link rel="stylesheet" href="{% static 'apps/css/responsive.css' %}">
     <!-- Modernizr js -->
     <script src="{% static 'apps/js/vendor/modernizr-2.8.3.min.js' %}"></script>
-    <link rel="stylesheet" href="">
 </head>
-<style>
-    /* Add this to your CSS file or within your HTML */
-    .message {
-        /* Add common styling for messages */
-    }
-
-    .message.login {
-        color: lightgreen; /* Set the text color to blue for login messages */
-    }
-
-    .message.registration {
-        color: lightgreen;
-    }
-
-    .message.error {
-        color: red; /* Set the text color to red for login and registration error messages */
-    }
-
-</style>
 <body>
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
@@ -341,7 +321,7 @@
                                         </ul>
                                     </li>
                                     <li class="catmenu-dropdown megamenu-holder"><a
-                                            href="shop-left-sidebar.html">Shop</a>
+                                            href="{% url 'shop_list_page' %}">Shop</a>
                                         <ul class="megamenu hb-megamenu">
                                             <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
                                                 <ul>
@@ -456,12 +436,12 @@
         <!-- Mobile Menu Area End Here -->
     </header>
     <!-- Header Area End Here -->
-    <!-- Begin Li's Breadcrumb Area -->
+
+
     {% block main_content %}
     {% endblock %}
 
 
-    <!-- Login Content Area End Here -->
     <!-- Begin Footer Area -->
     <div class="footer">
         <!-- Begin Footer Static Top Area -->

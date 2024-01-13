@@ -15,8 +15,7 @@ class RegisterForm(ModelForm):
         password = self.data.get('password')
         confirm_password = self.data.get('confirm_password')
         if password != confirm_password:
-            messages
-            # raise ValidationError('Confirm password is incorrect!')
+            raise ValidationError('Confirm password is incorrect!')
         return make_password(password)
 
     def clean_email(self):

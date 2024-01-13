@@ -7,11 +7,27 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView
 
 from apps.forms import RegisterForm
 from apps.mixins import NotLoginRequiredMixin
-from apps.models import Blog, Category
+from apps.models import Blog, Category, Product
 
 
 class IndexView(TemplateView):
     template_name = 'apps/index.html'
+
+
+class ShopListView(ListView):
+    template_name = 'apps/shopping/shop-list.html'
+    queryset = Product.objects.all()
+    context_object_name = 'products'
+
+
+class SingleProductView(DetailView):
+    template_name = 'apps/shopping/single-product.html'
+    queryset = Product.objects.all()
+    pk_url_kwarg = 'pk'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class BlogListView(ListView):

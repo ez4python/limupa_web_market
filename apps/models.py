@@ -1,10 +1,25 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Model, CharField, ForeignKey, CASCADE, ManyToManyField, DateTimeField, ImageField
+from django.db.models import Model, CharField, ForeignKey, CASCADE, ManyToManyField, DateTimeField, ImageField, \
+    PositiveIntegerField, FloatField
 from django_ckeditor_5.fields import CKEditor5Field
 
 
 class User(AbstractUser):
-    image = ImageField(upload_to='users/images')
+    image = ImageField(upload_to='users/images', default='users/default.jpg')
+
+
+class Product(Model):
+    title = CharField(max_length=255)
+    description = CKEditor5Field(blank=True, null=True)
+    image = ImageField(upload_to='products/images')
+    category = ForeignKey('apps.Category', on_delete=CASCADE)
+    quantity = PositiveIntegerField(default=0)
+    price = FloatField(default=0)
+    updated_at = DateTimeField(auto_now=True)
+    created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Category(Model):
