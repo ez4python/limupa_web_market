@@ -1,7 +1,4 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 
@@ -37,19 +34,20 @@ class BlogListView(ListView):
 
 
 class BlogDetailView(DetailView):
-    queryset = Blog.objects.all()
+    queryset = Blog.objects.order_by('-created_at')
     template_name = 'apps/blogs/blog-detail.html'
     pk_url_kwarg = 'pk'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        context['recent_blogs'] = self.get_queryset()[:3]
         return context
 
 
 class CustomLoginView(NotLoginRequiredMixin, LoginView):
     template_name = 'apps/login-register.html'
-    success_url = reverse_lazy('index_page')
+    next_page = 'index_page'
 
 
 class RegisterFormView(FormView):

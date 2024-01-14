@@ -20,3 +20,8 @@ class RegisterForm(ModelForm):
 
     def clean_email(self):
         email = self.data.get('email')
+        users_with_emails = User.objects.exclude(email__isnull=True).exclude(email='')
+        emails = list(users_with_emails.values_list('email', flat=True))
+        if email not in emails:
+            raise ValidationError('This email belongs to another user')
+        return email
