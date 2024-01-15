@@ -22,6 +22,7 @@ class Product(CreatedBaseModel):
     title = CharField(max_length=255)
     description = CKEditor5Field(blank=True, null=True, config_name='extends')
     category = ForeignKey('apps.Category', CASCADE)
+    image = ForeignKey('apps.ProductImage', CASCADE, related_name='products_images')
     quantity = PositiveIntegerField(default=0)
     price = FloatField()
 
@@ -31,7 +32,7 @@ class Product(CreatedBaseModel):
 
 class ProductImage(Model):
     image = ImageField(upload_to='products/images/', default='products/default-product.jpg')
-    product = ForeignKey('apps.Product', CASCADE)
+    product_id = ForeignKey('apps.Product', CASCADE)
 
 
 class Category(Model):

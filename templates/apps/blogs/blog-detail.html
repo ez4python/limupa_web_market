@@ -105,9 +105,8 @@
                                         <div class="li-tag-line">
                                             <h4>tag:</h4>
                                             {% for tag in blog.tags.all %}
-                                                <a href="#">{{ tag.name }}</a>
+                                                <a href="#">{{ tag.name }}</a>{% if not forloop.last %},{% endif %}
                                             {% endfor %}
-
                                         </div>
                                         <div class="li-blog-sharing text-center pt-30">
                                             <h4>share this post:</h4>

@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from apps.models import Blog, Tag, Category, Comment, User, Product
+from apps.models import Blog, Tag, Category, Comment, User, Product, ProductImage
 
 
 @admin.register(User)
