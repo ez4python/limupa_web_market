@@ -1,9 +1,11 @@
 import uuid
+
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, CharField, ForeignKey, CASCADE, ManyToManyField, DateTimeField, ImageField, \
     PositiveIntegerField, FloatField, UUIDField, EmailField
 from django_ckeditor_5.fields import CKEditor5Field
 from django_resized import ResizedImageField
+from apps.tasks import task_send_email
 
 
 class User(AbstractUser):
@@ -67,6 +69,11 @@ class Blog(CreatedBaseModel):
     text = CKEditor5Field(blank=True, null=True, config_name='extends')
     updated_at = DateTimeField(auto_now=True)
     created_at = DateTimeField(auto_now_add=True)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
+        all_emails: list = NewsReceiver.objects.values_list('email', flat=True)
+        task_send_email.delay('New blog added', self.name, list(all_emails))
 
     def count_commit(self):
         return self.comment_set.count()

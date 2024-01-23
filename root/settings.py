@@ -342,3 +342,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'akbaralisalohiddinov808@gmail.com'
 EMAIL_HOST_PASSWORD = 'fithphykbcloqxyp'
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
