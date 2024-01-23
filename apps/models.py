@@ -1,6 +1,7 @@
+import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, CharField, ForeignKey, CASCADE, ManyToManyField, DateTimeField, ImageField, \
-    PositiveIntegerField, FloatField
+    PositiveIntegerField, FloatField, UUIDField, EmailField
 from django_ckeditor_5.fields import CKEditor5Field
 from django_resized import ResizedImageField
 
@@ -56,8 +57,10 @@ class Tag(Model):
 
 
 class Blog(CreatedBaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = CharField(max_length=255)
     image = ImageField(upload_to='blogs/images/', default='blogs/default-blog.jpg')
+    # qr_code_image = ImageField(upload_to='blogs')
     author = ForeignKey('apps.User', CASCADE)
     category = ForeignKey('apps.Category', CASCADE)
     tags = ManyToManyField('apps.Tag')
@@ -78,3 +81,13 @@ class Comment(CreatedBaseModel):
     author = ForeignKey('apps.User', CASCADE)
     updated_at = DateTimeField(auto_now=True)
     created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.blog.name
+
+
+class NewsReceiver(CreatedBaseModel):
+    email = EmailField()
+
+    def __str__(self):
+        return self.email

@@ -6,7 +6,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Limupa Online Shopping</title>
+
+    {% block page_title %}
+    {% endblock %}
+
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -115,7 +118,13 @@
                                     </div>
                                     <div class="setting ht-setting">
                                         <ul class="ht-setting-list">
-                                            <li><a href="{% url 'login_page' %}">My Account</a></li>
+                                            <li>
+                                                {% if user.is_authenticated %}
+                                                    <a href="{% url 'profile_page' user.pk %}">My Account</a>
+                                                {% else %}
+                                                    <a href="{% url 'login_page' %}">My Account</a>
+                                                {% endif %}
+                                            </li>
                                             <li><a href="checkout.html">Checkout</a></li>
                                             {% if user.is_authenticated %}
                                                 <li>
@@ -155,7 +164,7 @@
                     <!-- Begin Header Middle Right Area -->
                     <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                         <!-- Begin Header Middle Searchbox Area -->
-                        <form action="#" class="hm-searchbox">
+                        <form action="{% url 'blog_list_page' %}" class="hm-searchbox">
                             <select class="nice-select select-search-category">
                                 <option value="0">All</option>
                                 <option value="10">Laptops</option>
@@ -228,7 +237,7 @@
                                 <option value="15">Smartwatch</option>
                                 <option value="16">Accessories</option>
                             </select>
-                            <input type="text" placeholder="Enter your search key ...">
+                            <input type="text" name="search" placeholder="Enter your search key ...">
                             <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
                         </form>
                         <!-- Header Middle Searchbox Area End Here -->
@@ -609,12 +618,23 @@
                             <!-- Begin Footer Newsletter Area -->
                             <div class="footer-newsletter">
                                 <h4>Sign up to newsletter</h4>
-                                <form action="#" method="post" id="mc-embedded-subscribe-form"
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <div class="alert alert-danger" style="color: red;">
+                                                <strong>{{ error|escape }}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+                                <form action="{% url 'news_letter_page' %}" method="post"
+                                      id="mc-embedded-subscribe-form"
                                       name="mc-embedded-subscribe-form" class="footer-subscribe-form validate"
-                                      target="_blank" novalidate>
+                                      novalidate>
+                                    {% csrf_token %}
                                     <div id="mc_embed_signup_scroll">
                                         <div id="mc-form" class="mc-form subscribe-form form-group">
-                                            <input id="mc-email" type="email" autocomplete="off"
+                                            <input id="mc-email" name="email" type="email" autocomplete="off"
                                                    placeholder="Enter your email"/>
                                             <button class="btn" id="mc-submit">Subscribe</button>
                                         </div>

@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from apps.models import Blog, Tag, Category, Comment, User, Product, ProductImage
+from apps.models import Blog, Tag, Category, Comment, User, Product, ProductImage, NewsReceiver
 
 
 @admin.register(User)
@@ -59,4 +59,9 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(NewsReceiver)
+class EmailsAdmin(admin.ModelAdmin):
     pass

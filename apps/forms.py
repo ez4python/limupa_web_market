@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField, PasswordInput
-from apps.models import User
+from apps.models import User, NewsReceiver
 
 
 class RegisterForm(ModelForm):
@@ -24,4 +24,16 @@ class RegisterForm(ModelForm):
         emails = list(users_with_emails.values_list('email', flat=True))
         if email not in emails:
             raise ValidationError('This email belongs to another user')
+        return email
+
+
+class EmailForm(ModelForm):
+    class Meta:
+        model = NewsReceiver
+        fields = ('email',)
+
+    def clean_email(self):
+        email = self.data.get('email')
+        if NewsReceiver.objects.filter(email=email):
+            raise ValidationError('This email has already been registered!')
         return email

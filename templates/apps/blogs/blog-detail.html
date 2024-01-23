@@ -1,6 +1,9 @@
 {% extends 'apps/base.html' %}
 {% load static %}
 
+{% block page_title %}
+	<title>Blog-Detail</title>
+{% endblock %}
 
 {% block main_content %}
     <div class="breadcrumb-area">
@@ -70,12 +73,9 @@
                         <div class="li-blog-sidebar">
                             <h4 class="li-blog-sidebar-title">Tags</h4>
                             <ul class="li-blog-tags">
-                                <li><a href="#">Gaming</a></li>
-                                <li><a href="#">Chromebook</a></li>
-                                <li><a href="#">Refurbished</a></li>
-                                <li><a href="#">Touchscreen</a></li>
-                                <li><a href="#">Ultrabooks</a></li>
-                                <li><a href="#">Sound Cards</a></li>
+                                {% for tag in tags %}
+                                	<li><a href="#">{{ tag.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>

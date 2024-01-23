@@ -1,5 +1,5 @@
 {% extends 'apps/base.html' %}
-
+{% load custom_math %}
 {% load static %}
 
 {% block main_content %}
@@ -62,11 +62,32 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <ul class="li-pagination-box">
-                                            <li><a class="Previous" href="#">Previous</a></li>
-                                            <li class="active"><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a class="Next" href="#">Next</a></li>
+                                            {% if page_obj.has_previous %}
+                                                <li><a class="Previous"
+                                                       href="{{ page_obj.previous_page_number|add_url_query_params:request.GET }}">Previous</a>
+                                                </li>
+                                            {% else %}
+                                                <li><a class="Previous" href="#">Previous</a></li>
+                                            {% endif %}
+                                            {% if page_obj.has_previous %}
+                                                <li>
+                                                    <a href="{{ page_obj.number|sub:"1"|add_url_query_params:request.GET }}">{{ page_obj.number|sub:'1' }}</a>
+                                                </li>
+                                            {% endif %}
+                                            <!-- active-page -->
+                                            <li class="active"><a href="#">{{ page_obj.number }}</a></li>
+                                            {% if page_obj.has_next %}
+                                                <li>
+                                                    <a href="{{ page_obj.number|add:'1'|add_url_query_params:request.GET }}">{{ page_obj.number|add:'1' }}</a>
+                                                </li>
+                                            {% endif %}
+                                            {% if page_obj.has_next %}
+                                                <li><a class="Next"
+                                                       href="{{ page_obj.next_page_number|add_url_query_params:request.GET }}">Next</a>
+                                                </li>
+                                            {% else %}
+                                                <li><a class="Next" href="#">Next</a></li>
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
