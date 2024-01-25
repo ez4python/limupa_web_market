@@ -1,5 +1,8 @@
 import os.path
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-18kp!na=o@5^wbo$mzw9m8@1d5d!sus+17_qvv7#&td*++!i(6"
@@ -17,7 +20,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'apps.apps.AppsConfig',
     'django_ckeditor_5',
-    'django_cleanup.apps.CleanupConfig'
+    'django_cleanup.apps.CleanupConfig',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -50,30 +54,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "root.wsgi.application"
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": 'limupa_db',
+#         "USER": 'postgres',
+#         "PASSWORD": '1',
+#         "HOST": 'localhost',
+#         "PORT": 5431,
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'limupa_db',
-        "USER": 'postgres',
-        "PASSWORD": '1',
-        "HOST": 'localhost',
-        "PORT": 5431,
-    }
+    'default': os.getenv('DB_URL')
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    # },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    # },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    # },
+    # {
+    #     "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    # },
 ]
 
 AUTH_USER_MODEL = 'apps.User'
@@ -204,7 +212,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Limupa",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "books/img/logo.png",
+    "site_logo": "apps/images/favicon.png",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": None,
@@ -284,7 +292,7 @@ JAZZMIN_SETTINGS = {
     "custom_links": {
         "books": [{
             "name": "Make Messages",
-            "url": "make_messages",
+            # "url": "make_messages",
             "icon": "fas fa-comments",
             "permissions": ["books.view_book"]
         }]
@@ -343,4 +351,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'akbaralisalohiddinov808@gmail.com'
 EMAIL_HOST_PASSWORD = 'fithphykbcloqxyp'
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_EXTENDED = True

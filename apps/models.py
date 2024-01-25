@@ -71,9 +71,10 @@ class Blog(CreatedBaseModel):
     created_at = DateTimeField(auto_now_add=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.id in None:
+            all_emails: list = NewsReceiver.objects.values_list('email', flat=True)
+            task_send_email.delay('New blog added', self.name, list(all_emails))
         super().save(force_insert, force_update, using, update_fields)
-        all_emails: list = NewsReceiver.objects.values_list('email', flat=True)
-        task_send_email.delay('New blog added', self.name, list(all_emails))
 
     def count_commit(self):
         return self.comment_set.count()
