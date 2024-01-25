@@ -1,4 +1,5 @@
 import os.path
+import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -54,19 +55,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "root.wsgi.application"
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": 'limupa_db',
-#         "USER": 'postgres',
-#         "PASSWORD": '1',
-#         "HOST": 'localhost',
-#         "PORT": 5431,
-#     }
-# }
-
 DATABASES = {
-    'default': os.getenv('DB_URL')
+    'default': dj_database_url.config(default=os.getenv('DB_URL'))
 }
 
 AUTH_PASSWORD_VALIDATORS = [
