@@ -22,7 +22,7 @@ class RegisterForm(ModelForm):
         email = self.data.get('email')
         users_with_emails = User.objects.exclude(email__isnull=True).exclude(email='')
         emails = list(users_with_emails.values_list('email', flat=True))
-        if email not in emails:
+        if email in emails:
             raise ValidationError('This email belongs to another user')
         return email
 
@@ -37,3 +37,21 @@ class EmailForm(ModelForm):
         if NewsReceiver.objects.filter(email=email):
             raise ValidationError('This email has already been registered!')
         return email
+
+
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'email')
+
+    def clean_email(self):
+        email = self.data.get('email')
+        if User.objects.filter(email=email):
+            raise ValidationError('This email has already been registered!')
+        return email
+
+    def clean_username(self):
+        username = self.data.get('username')
+        if User.objects.filter(username=username):
+            raise ValidationError('This username has already been used!')
+        return username

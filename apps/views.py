@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect

@@ -30,39 +30,38 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputFirstName">First name</label>
-                                        <input class="form-control" id="inputFirstName" type="text"
+                                        <input class="form-control" id="inputFirstName" type="text" name="first_name"
                                                placeholder="Enter your first name" value="{{ user.first_name }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputLastName">Last name</label>
-                                        <input class="form-control" id="inputLastName" type="text"
+                                        <input class="form-control" id="inputLastName" type="text" name="last_name"
                                                placeholder="Enter your last name" value="{{ user.last_name }}">
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputUsername">Username</label>
-                                        <input class="form-control" id="inputUsername" name="username"
-                                               type="text" placeholder="Enter your username"
-                                               value="{{ user.username }}">
+                                        <input class="form-control" id="inputUsername" type="text" name="username"
+                                               placeholder="Enter your username" value="{{ user.username }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputEmail">Email</label>
-                                        <input class="form-control" id="inputEmail" type="email"
+                                        <input class="form-control" id="inputEmail" type="email" name="email"
                                                placeholder="Enter your email" value="{{ user.email }}"></div>
                                 </div>
-                                <div class="row gx-3 mb-3">
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputPassword">Password</label>
-                                        <input class="form-control" id="inputPassword" type="password"
-                                               placeholder="Enter your new password" name="password">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputPassword">Confirm-password</label>
-                                        <input class="form-control" id="inputPassword" type="password"
-                                               placeholder="Confirm your new password" name="confirm-password">
-                                    </div>
-                                </div>
+                                {#                                <div class="row gx-3 mb-3">#}
+                                {#                                    <div class="col-md-6">#}
+                                {#                                        <label class="small mb-1" for="inputPassword">Password</label>#}
+                                {#                                        <input class="form-control" id="inputPassword" type="password"#}
+                                {#                                               placeholder="Enter your new password" name="password">#}
+                                {#                                    </div>#}
+                                {#                                    <div class="col-md-6">#}
+                                {#                                        <label class="small mb-1" for="inputPassword">Confirm-password</label>#}
+                                {#                                        <input class="form-control" id="inputPassword" type="password"#}
+                                {#                                               placeholder="Confirm your new password" name="confirm-password">#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
                                 <button class="btn btn-primary" type="button">Save changes</button>
                             </form>
                         </div>
