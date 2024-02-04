@@ -8,6 +8,7 @@ urlpatterns = [
     path('register', RegisterFormView.as_view(), name='register_page'),
     path('login', CustomLoginView.as_view(), name='login_page'),
     path('logout', LogoutView.as_view(next_page='login_page'), name='logout_page'),
+    # path('profile/<pk>', ProfileView.as_view(), name='profile_page'),
     path('news-letter', SignUpToNewsView.as_view(), name='news_letter_page'),
     path('blog-list', BlogListView.as_view(), name='blog_list_page'),
     path('blog-detail/<uuid:pk>', BlogDetailView.as_view(), name='blog_detail_page'),

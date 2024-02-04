@@ -63,13 +63,13 @@ class BlogDetailView(DetailView):
 
 class CustomLoginView(NotLoginRequiredMixin, LoginView):
     template_name = 'apps/login-register.html'
-    success_url = reverse_lazy('index_page')
+    next_page = 'index_page'
 
 
 class RegisterFormView(FormView):
     template_name = 'apps/login-register.html'
     form_class = RegisterForm
-    success_url = reverse_lazy('register_page')
+    success_url = reverse_lazy('login_page')
 
     def form_valid(self, form):
         form.save()
