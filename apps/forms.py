@@ -39,19 +39,7 @@ class EmailForm(ModelForm):
         return email
 
 
-class UserUpdateForm(ModelForm):
+class ProfileUpdateForm(ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email')
-
-    def clean_email(self):
-        email = self.data.get('email')
-        if User.objects.filter(email=email):
-            raise ValidationError('This email has already been registered!')
-        return email
-
-    def clean_username(self):
-        username = self.data.get('username')
-        if User.objects.filter(username=username):
-            raise ValidationError('This username has already been used!')
-        return username
+        fields = ('image', 'first_name', 'last_name', 'username', 'email')

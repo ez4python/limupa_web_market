@@ -1,12 +1,11 @@
-from collections import defaultdict
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
+from django.views.generic.edit import UpdateView
 
-from apps.forms import RegisterForm, EmailForm
+from apps.forms import RegisterForm, EmailForm, ProfileUpdateForm
 from apps.mixins import NotLoginRequiredMixin
 from apps.models import Blog, Category, Product, Tag, User
 
@@ -89,13 +88,29 @@ class SignUpToNewsView(CreateView):
         return redirect('.', {'form': form})
 
 
-class ProfileView(LoginRequiredMixin, DetailView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'apps/profile/profile_page.html'
-    model = User
-    pk_url_kwarg = 'pk'
-    success_url = reverse_lazy('profile_page')
+    form_class = ProfileUpdateForm
+    context_object_name = 'user'
+    queryset = User.objects.all()
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('profile_update_page', kwargs={'pk': self.get_object().id})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
+        user = self.request.user
+        context['profile_form'] = ProfileUpdateForm(
+            instance=self.request.user,
+            initial={
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'username': user.username,
+                'email': user.email
+            }
+        )
         return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
