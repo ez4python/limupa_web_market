@@ -76,7 +76,7 @@ class Blog(CreatedBaseModel):
             task_send_email.delay('New blog added', self.name, list(all_emails))
         super().save(force_insert, force_update, using, update_fields)
 
-    def count_commit(self):
+    def count_comment(self):
         return self.comment_set.count()
 
     def __str__(self):
